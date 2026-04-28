@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+data/_last_failed_response.txt
+# Local data files (resumes, debug dumps) — never commit
+data/*
+!data/.gitkeep
+!data/README.md
