@@ -220,4 +220,4 @@ data/_last_failed_response.txt
 # Local data files (resumes, debug dumps) — never commit
 data/*
 !data/.gitkeep
-!data/README.md
+!data/README.mddata/parsed_resume.json

@@ -10,7 +10,7 @@ httpcore==1.0.9
 httpx==0.28.1
 idna==3.13
 jiter==0.14.0
--e git+ssh://git@github.com/gnaniscode/jobcopilot.git@9a7860e3201c684e54b20982cf421f311bd841b2#egg=jobcopilot
+-e git+ssh://git@github.com/gnaniscode/jobcopilot.git@09e1b234e7d4fc407044ce3f4a5d8dc6f06fd8bb#egg=jobcopilot
 lxml==6.1.0
 pydantic==2.13.3
 pydantic_core==2.46.3

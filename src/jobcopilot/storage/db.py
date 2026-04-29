@@ -1,14 +1,10 @@
-"""Async SQLite storage for jobs.
-
-Schema is intentionally minimal for now. We'll add columns
-(score, draft, application_status) as later phases need them.
-"""
+"""Async SQLite storage for jobs and match scores."""
 from datetime import datetime
 from pathlib import Path
 
 import aiosqlite
 
-from jobcopilot.sources.schemas import Job, JobLocation
+from jobcopilot.sources.schemas import Job
 
 
 SCHEMA = """
@@ -31,6 +27,26 @@ CREATE TABLE IF NOT EXISTS jobs (
 
 CREATE INDEX IF NOT EXISTS idx_jobs_company   ON jobs(company);
 CREATE INDEX IF NOT EXISTS idx_jobs_posted_at ON jobs(posted_at);
+
+CREATE TABLE IF NOT EXISTS match_scores (
+    dedup_key       TEXT NOT NULL,
+    prompt_version  TEXT NOT NULL,
+    model           TEXT NOT NULL,
+    score           INTEGER NOT NULL,
+    tier            TEXT NOT NULL,
+    result_json     TEXT NOT NULL,
+    input_tokens    INTEGER NOT NULL,
+    cache_read_tokens     INTEGER NOT NULL DEFAULT 0,
+    cache_creation_tokens INTEGER NOT NULL DEFAULT 0,
+    output_tokens   INTEGER NOT NULL,
+    cost_usd        REAL    NOT NULL,
+    scored_at       TEXT    NOT NULL,
+    PRIMARY KEY (dedup_key, prompt_version, model),
+    FOREIGN KEY (dedup_key) REFERENCES jobs(dedup_key)
+);
+
+CREATE INDEX IF NOT EXISTS idx_scores_score ON match_scores(score DESC);
+CREATE INDEX IF NOT EXISTS idx_scores_tier  ON match_scores(tier);
 """
 
 
@@ -53,7 +69,6 @@ class JobStore:
             )
             exists = await cursor.fetchone() is not None
             if exists:
-                # Update fetched_at so we know it's still active
                 await db.execute(
                     "UPDATE jobs SET fetched_at = ? WHERE dedup_key = ?",
                     (now, job.dedup_key),
@@ -95,3 +110,66 @@ class JobStore:
             cursor = await db.execute("SELECT COUNT(*) FROM jobs")
             row = await cursor.fetchone()
             return row[0] if row else 0
+
+    async def has_score(self, dedup_key: str, prompt_version: str, model: str) -> bool:
+        async with aiosqlite.connect(self.db_path) as db:
+            cursor = await db.execute(
+                "SELECT 1 FROM match_scores WHERE dedup_key=? AND prompt_version=? AND model=?",
+                (dedup_key, prompt_version, model),
+            )
+            return await cursor.fetchone() is not None
+
+    async def save_score(
+        self,
+        *,
+        dedup_key: str,
+        prompt_version: str,
+        model: str,
+        score: int,
+        tier: str,
+        result_json: str,
+        input_tokens: int,
+        cache_read_tokens: int,
+        cache_creation_tokens: int,
+        output_tokens: int,
+        cost_usd: float,
+    ) -> None:
+        now = datetime.utcnow().isoformat()
+        async with aiosqlite.connect(self.db_path) as db:
+            await db.execute(
+                """
+                INSERT OR REPLACE INTO match_scores (
+                    dedup_key, prompt_version, model,
+                    score, tier, result_json,
+                    input_tokens, cache_read_tokens, cache_creation_tokens, output_tokens,
+                    cost_usd, scored_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    dedup_key, prompt_version, model,
+                    score, tier, result_json,
+                    input_tokens, cache_read_tokens, cache_creation_tokens, output_tokens,
+                    cost_usd, now,
+                ),
+            )
+            await db.commit()
+
+    async def list_unscored_jobs(self, prompt_version: str, model: str) -> list[dict]:
+        """Return all jobs that haven't been scored under this (prompt_version, model)."""
+        async with aiosqlite.connect(self.db_path) as db:
+            db.row_factory = aiosqlite.Row
+            cursor = await db.execute(
+                """
+                SELECT j.*
+                FROM jobs j
+                LEFT JOIN match_scores s
+                  ON s.dedup_key = j.dedup_key
+                 AND s.prompt_version = ?
+                 AND s.model = ?
+                WHERE s.dedup_key IS NULL
+                ORDER BY j.first_seen_at DESC
+                """,
+                (prompt_version, model),
+            )
+            rows = await cursor.fetchall()
+            return [dict(r) for r in rows]

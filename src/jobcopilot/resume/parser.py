@@ -118,6 +118,21 @@ def parse_resume(file_path: Path) -> Resume:
 
     return Resume.model_validate(data)
 
+def load_or_parse_resume(file_path: Path, cache_path: Path = Path("data/parsed_resume.json")) -> Resume:
+    """Parse the resume once, cache the result to disk, reuse on subsequent runs.
+
+    This makes downstream LLM calls deterministic — important for prompt caching.
+    Delete the cache file to force a re-parse (e.g., after updating the resume).
+    """
+    if cache_path.exists():
+        data = json.loads(cache_path.read_text())
+        return Resume.model_validate(data)
+
+    resume = parse_resume(file_path)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(resume.model_dump_json(indent=2))
+    return resume
+
 
 if __name__ == "__main__":
     import sys
