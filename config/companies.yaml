@@ -1,0 +1,17 @@
+# Companies to monitor for job openings.
+# Each entry: { source: greenhouse|lever, slug: <board-token-or-company-slug> }
+#
+# To find a company's slug:
+# - Greenhouse: visit https://boards.greenhouse.io/<slug> — slug is in the URL
+# - Lever: visit https://jobs.lever.co/<slug> — slug is in the URL
+companies:
+  - source: greenhouse
+    slug: anthropic
+  - source: greenhouse
+    slug: airbnb
+  - source: greenhouse
+    slug: stripe
+  - source: greenhouse
+    slug: discord
+  - source: lever
+    slug: ramp
