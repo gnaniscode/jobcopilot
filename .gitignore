@@ -221,3 +221,4 @@ data/_last_failed_response.txt
 data/*
 !data/.gitkeep
 !data/README.mddata/parsed_resume.json
+drafts/

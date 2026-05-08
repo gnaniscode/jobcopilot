@@ -1,10 +1,7 @@
 # Companies to monitor for job openings.
 # Each entry: { source: greenhouse|lever, slug: <board-token-or-company-slug> }
-#
-# To find a company's slug:
-# - Greenhouse: visit https://boards.greenhouse.io/<slug> — slug is in the URL
-# - Lever: visit https://jobs.lever.co/<slug> — slug is in the URL
 companies:
+  # ----- Already-running set -----
   - source: greenhouse
     slug: anthropic
   - source: greenhouse
@@ -13,5 +10,39 @@ companies:
     slug: stripe
   - source: greenhouse
     slug: discord
+
+  # ----- AI labs -----
+  - source: greenhouse
+    slug: openai
+  - source: greenhouse
+    slug: cohere
+  - source: greenhouse
+    slug: huggingface
+  - source: greenhouse
+    slug: mistral
+
+  # ----- Mid-stage GenAI-native -----
   - source: lever
-    slug: ramp
+    slug: perplexity
+  - source: greenhouse
+    slug: runway
+  - source: greenhouse
+    slug: glean
+  - source: greenhouse
+    slug: harveyai
+
+  # ----- Enterprise data/AI infra -----
+  - source: greenhouse
+    slug: databricks
+  - source: greenhouse
+    slug: snowflake
+  - source: greenhouse
+    slug: cloudflare
+  - source: greenhouse
+    slug: scaleai
+
+  # ----- Healthcare AI (matches your Abbott background) -----
+  - source: greenhouse
+    slug: abridge
+  - source: greenhouse
+    slug: tempus
