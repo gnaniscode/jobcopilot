@@ -21,7 +21,6 @@ idna==3.13
 itsdangerous==2.2.0
 Jinja2==3.1.6
 jiter==0.14.0
--e git+ssh://git@github.com/gnaniscode/jobcopilot.git@78fa78d4b2326e810929cf01ddb21918fbe14d72#egg=jobcopilot
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 lxml==6.1.0
