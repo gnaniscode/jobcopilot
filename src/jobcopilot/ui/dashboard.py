@@ -1,5 +1,7 @@
 """Streamlit dashboard for browsing matches and managing applications."""
 import json
+import os
+import os
 import re
 import sqlite3
 import sys
@@ -9,10 +11,25 @@ from pathlib import Path
 
 import streamlit as st
 
+# Demo mode: when JOBCOPILOT_DEMO=1, use seeded sample data instead of real data.
+# Streamlit Cloud sets this in app settings; locally you stay in normal mode.
+DEMO_MODE = os.getenv("JOBCOPILOT_DEMO", "").lower() in ("1", "true", "yes")
 
-DB_PATH = Path("data/jobcopilot.db")
-DRAFTS_DIR = Path("drafts")
+if DEMO_MODE:
+    DB_PATH = Path("demo/jobcopilot.db")
+    DRAFTS_DIR = Path("demo/drafts")
+else:
+    DB_PATH = Path("data/jobcopilot.db")
+    DRAFTS_DIR = Path("drafts")
 
+st.title("JobCopilot")
+if DEMO_MODE:
+    st.info(
+        "🎭 **Demo Mode** — This is a public demo with sample data. "
+        "The fictional candidate is a senior GenAI engineer; jobs are sample postings "
+        "to showcase how the matching engine works. "
+        "Source code: [github.com/gnaniscode/jobcopilot](https://github.com/gnaniscode/jobcopilot)"
+    )
 
 def slugify(s: str) -> str:
     return re.sub(r"[^a-z0-9-]+", "-", s.lower()).strip("-")[:60]
@@ -280,14 +297,20 @@ for m in matches:
             with st.expander("📝 View draft"):
                 st.markdown(draft_path.read_text())
         else:
-            if st.button(
-                "✨ Generate cover letter draft (~$0.01)",
-                key=f"{m['dedup_key']}-generate",
-            ):
-                with st.spinner("Calling Claude to draft your cover letter..."):
-                    ok, msg = generate_draft_for(m["dedup_key"])
-                if ok:
-                    st.success(msg)
-                    st.rerun()
-                else:
-                    st.error(f"Failed: {msg}")
+            if DEMO_MODE:
+                st.caption(
+                    "_Cover letter generation is disabled in demo mode. "
+                    "Clone the repo and run locally to use this feature._"
+                )
+            else:
+                if st.button(
+                    "✨ Generate cover letter draft (~$0.01)",
+                    key=f"{m['dedup_key']}-generate",
+                ):
+                    with st.spinner("Calling Claude to draft your cover letter..."):
+                        ok, msg = generate_draft_for(m["dedup_key"])
+                    if ok:
+                        st.success(msg)
+                        st.rerun()
+                    else:
+                        st.error(f"Failed: {msg}")

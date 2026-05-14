@@ -1,0 +1,141 @@
+{
+  "full_name": "Alex Chen",
+  "email": "alex.chen.demo@example.com",
+  "phone": "(555) 123-4567",
+  "location": "San Francisco, CA",
+  "linkedin": "linkedin.com/in/alex-chen-demo",
+  "github": "github.com/alexchen-demo",
+  "portfolio_url": null,
+  "summary": "Senior Python Developer with 6+ years building production GenAI systems, FastAPI microservices, and scalable backend infrastructure. Specialized in LLM-powered applications, RAG pipelines, multi-agent workflows, and async API design across AWS and Azure. Track record of shipping high-throughput services, improving retrieval relevance, and reducing inference cost through smart caching and model selection.",
+  "skills": [
+    "Python 3.12",
+    "FastAPI",
+    "Flask",
+    "Django",
+    "Pydantic v2",
+    "SQLAlchemy",
+    "Alembic",
+    "PostgreSQL",
+    "MySQL",
+    "Snowflake",
+    "MongoDB",
+    "Redis",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "Azure",
+    "Terraform",
+    "Jenkins",
+    "GitHub Actions",
+    "REST APIs",
+    "GraphQL",
+    "OAuth2",
+    "JWT",
+    "LangChain",
+    "LangGraph",
+    "LlamaIndex",
+    "RAG",
+    "OpenAI API",
+    "Anthropic Claude",
+    "AWS Bedrock",
+    "Pytest",
+    "MLflow",
+    "LangSmith",
+    "Async programming",
+    "Performance tuning",
+    "Pinecone",
+    "Weaviate",
+    "Hugging Face Transformers",
+    "AWS Lambda",
+    "AWS EKS",
+    "AWS SageMaker",
+    "OpenTelemetry",
+    "Pandas",
+    "NumPy",
+    "SOLID principles",
+    "Clean architecture",
+    "Agile"
+  ],
+  "experience": [
+    {
+      "company": "FrontierAI Labs",
+      "title": "Senior Python Developer (GenAI Platform)",
+      "location": "San Francisco, CA",
+      "start_date": "2024-06",
+      "end_date": "Present",
+      "description": "Built a Python-based GenAI platform powering enterprise workflow automation. Designed FastAPI microservices and hybrid RAG pipelines on Kubernetes, integrating LangChain, Pinecone, and AWS Bedrock to deliver high-throughput, low-latency conversational AI.",
+      "achievements": [
+        "Designed and shipped production FastAPI microservices serving 600K+ daily API calls with sub-2-second p95 latency using async/await and connection pooling",
+        "Architected a hybrid RAG retrieval pipeline (LangChain + Pinecone + Weaviate) that improved answer relevance by 28%",
+        "Implemented LangGraph-based multi-step agent workflows with tool calling, conditional routing, and state management for complex task resolution",
+        "Cut end-to-end pipeline latency by 18% through query tuning, Redis caching, and connection pooling; reduced PostgreSQL CPU utilization by ~25% at peak",
+        "Built CI/CD pipelines in Jenkins and GitHub Actions automating lint, type checks, unit tests, and Docker image publishing to ECR",
+        "Mentored two junior engineers on async patterns, testing best practices, and production debugging"
+      ]
+    },
+    {
+      "company": "MedScribe Health",
+      "title": "Python Developer (Clinical AI)",
+      "location": "Chicago, IL",
+      "start_date": "2023-01",
+      "end_date": "2024-05",
+      "description": "Developed PHI-compliant Python services on AWS for processing clinical documents and physician notes. Built data pipelines, FastAPI APIs, and healthcare-focused RAG workflows leveraging AWS Bedrock and vector stores.",
+      "achievements": [
+        "Built PHI-compliant Python data pipelines processing clinical notes from multiple source systems; improved data quality by 30%",
+        "Shipped FastAPI services exposing document summarization, semantic search, and adverse-event extraction, reducing manual review effort by 35%",
+        "Engineered RAG pipelines using LangChain and LlamaIndex with Weaviate; improved precision@k by 22%",
+        "Integrated AWS Bedrock (Claude) for regulatory document summarization and clinical text classification",
+        "Implemented OAuth2/JWT authentication and RBAC across all internal PHI APIs; tightened least-privilege access",
+        "Deployed containerized services on AWS EKS with Helm charts, autoscaling, and zero-downtime rolling updates"
+      ]
+    },
+    {
+      "company": "DataPulse Analytics",
+      "title": "Python Developer / BI Engineer",
+      "location": "Austin, TX",
+      "start_date": "2021-03",
+      "end_date": "2022-12",
+      "description": "Built workflow automation and operational reporting platforms. Focused on automating data validation, reporting pipelines, and Linux job orchestration across operational datasets.",
+      "achievements": [
+        "Built Python automation scripts reducing manual validation cycle time by 40%",
+        "Developed REST API integrations with JIRA and internal tools for sprint tracking and reporting",
+        "Optimized MySQL queries and indexed views supporting reporting pipelines; cut dashboard load times by 50%",
+        "Designed config-driven Python utilities making automation reusable across business units",
+        "Delivered Power BI operational dashboards giving Scrum teams real-time visibility into sprint metrics"
+      ]
+    },
+    {
+      "company": "Lightwave Software",
+      "title": "Python Developer Intern",
+      "location": "Remote",
+      "start_date": "2020-05",
+      "end_date": "2021-02",
+      "description": "Supported business intelligence and reporting initiatives by building Python ETL pipelines, SQL transformations, and Tableau dashboards.",
+      "achievements": [
+        "Wrote Python ETL scripts using Pandas and NumPy for SQL Server data; improved data prep efficiency by 30%",
+        "Built reusable Python utility libraries for transformations used across multiple analyst projects",
+        "Optimized T-SQL queries reducing data load times by 25%",
+        "Built Tableau dashboards (KPI scorecards, drill-downs) for enterprise stakeholders"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of California, Berkeley",
+      "degree": "Master of Science",
+      "field_of_study": "Information Science",
+      "graduation_year": 2020,
+      "gpa": null
+    },
+    {
+      "institution": "Indian Institute of Technology Madras",
+      "degree": "B.Tech",
+      "field_of_study": "Computer Science & Engineering",
+      "graduation_year": 2018,
+      "gpa": null
+    }
+  ],
+  "projects": [],
+  "certifications": [],
+  "languages": ["English (native)", "Mandarin (conversational)"]
+}
